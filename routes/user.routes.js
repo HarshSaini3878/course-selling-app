@@ -1,8 +1,9 @@
-const {Router}=require("express");
-const userRouter =Router();
-userRouter.post('/signin',(req,res)=>{
+import { Router } from 'express';
+const userRouter = Router();
 
-})
-module.exports={
-    userRouter:userRouter
-}
+userRouter.post('/signin', (req, res) => {
+    // Handle sign-in logic here
+    res.send("Sign-in route");
+});
+
+export { userRouter };

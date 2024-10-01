@@ -1,8 +1,9 @@
-const {Router}=require("express");
-const adminRouter=Router();
-adminRouter.get("/abcd",(req,res)=>{
+import { Router } from 'express';
 
+const adminRouter = Router();
+
+adminRouter.get("/abcd", (req, res) => {
+    // Handle the request here
 });
-module.exports={
-    adminRouter:adminRouter,
-}
+
+export { adminRouter };

@@ -1,8 +1,8 @@
-const {Router}=require("express");
-const courseRouter =Router();
-courseRouter.post('/signin',(req,res)=>{
+import { Router } from 'express';
+const courseRouter = Router();
 
-})
-module.exports={
-    courseRouter:courseRouter
-}
+courseRouter.post('/signin', (req, res) => {
+    // Handle sign-in logic here
+});
+
+export { courseRouter };
