@@ -12,11 +12,17 @@ const signupSchema = z.object({
     password: z.string().min(6, "Password must be at least 6 characters long."),
     role: z.enum(["user", "admin"], "Role must be either 'user' or 'admin'."),
 });
+const signinSchema = z.object({
+    
+    email: z.string().email("Invalid email format."),
+    password: z.string().min(6, "Password must be at least 6 characters long."),
+    role: z.enum(["user", "admin"], "Role must be either 'user' or 'admin'."),
+});
 
 export const signup = async function signup(req, res) {
     try {
       
-        const { firstname, lastname, email, password, role } = signupSchema.parse(req.body);
+        const { email, password, role } = signupSchema.parse(req.body);
 
        
         let existingUser;
