@@ -139,3 +139,26 @@ export const getCourses = async (req, res) => {
     });
   }
 };
+
+export const getCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    // Find the course by its ID
+    const course = await CourseModel.findById(courseId);
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    return res.json({
+      message: "Course fetched successfully",
+      course,
+    });
+  } catch (error) {
+    console.error("Error fetching course:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};

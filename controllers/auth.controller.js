@@ -1,6 +1,7 @@
 import { z } from "zod";
 import UserModel from '../Schemas/user.schema.js';
 import AdminModel from '../Schemas/admin.schema.js';
+import CourseModel from "../Schemas/course.schema.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -114,3 +115,41 @@ export const signin = async function signin(req, res) {
         return res.status(500).json({ message: "Internal server error." });
     }
 };
+
+export const purchaseCourse = async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const userId = req.user_id; // assuming `isSignin` middleware adds user_id to `req`
+  
+      // Find the course by its ID
+      const course = await CourseModel.findById(courseId);
+      if (!course) {
+        return res.status(404).json({ message: "Course not found" });
+      }
+  
+      // Find the user
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Check if the user has already purchased the course
+      if (user.purchasedCourses.includes(courseId)) {
+        return res.status(400).json({ message: "Course already purchased" });
+      }
+  
+      // Add the course to the user's purchasedCourses array
+      user.purchasedCourses.push(courseId);
+      await user.save();
+  
+      return res.json({
+        message: "Course purchased successfully",
+        course,
+      });
+    } catch (error) {
+      console.error("Error purchasing course:", error);
+      return res.status(500).json({
+        message: "Internal server error",
+      });
+    }
+  };
